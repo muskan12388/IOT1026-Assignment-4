@@ -3,10 +3,7 @@ using Assignment.AbstractCommand;
 
 internal class Program
 {
-    private static void Main(string[] args)
-    {
-        // Main method implementation
-    }
+  
 
     [TestMethod]
     private static void TestAssignCommand()
