@@ -1,23 +1,108 @@
 ﻿namespace Assignment.InterfaceCommand
 {
-    // Define an interface for robot commands
-    public interface IRobotCommand
+    public interface RobotCommand
     {
-        void Run(Robot robot);
+        void Run(Robot robot); // Interfaces are public and abstract by default.
     }
 
-    // Define a custom command that implements the IRobotCommand interface
-    public class CustomCommand : IRobotCommand
+    public class OffCommand : RobotCommand
     {
-        // Implement the Run method to perform custom actions on the robot
+        public void Run(Robot robot) => robot.IsPowered = false;
+    }
+
+    public class OnCommand : RobotCommand
+    {
+        public void Run(Robot robot) => robot.IsPowered = true;
+    }
+
+    public class WestCommand : RobotCommand
+    {
         public void Run(Robot robot)
         {
-            // Perform your custom action on the robot here
-            // For example:
-            robot.X += 5; // Increase the X coordinate of the robot's position by 5
-            robot.Y -= 3; // Decrease the Y coordinate of the robot's position by 3
-            robot.IsPowered = true; // Set the IsPowered property of the robot to true
+            if (robot.IsPowered)
+            {
+                robot.X--;
+            }
+            else
+            {
+                // Handle the case when the robot is not powered.
+                // Add your code here.
+            }
         }
+    }
 
+    public class EastCommand : RobotCommand
+    {
+        public void Run(Robot robot)
+        {
+            if (robot.IsPowered)
+            {
+                robot.X++;
+            }
+            else
+            {
+                // Handle the case when the robot is not powered.
+                // Add your code here.
+            }
+        }
+    }
+
+    public class SouthCommand : RobotCommand
+    {
+        public void Run(Robot robot)
+        {
+            if (robot.IsPowered)
+            {
+                robot.Y--;
+            }
+            else
+            {
+                // Handle the case when the robot is not powered.
+                // Add your code here.
+            }
+        }
+    }
+
+    public class NorthCommand : RobotCommand
+    {
+        public void Run(Robot robot)
+        {
+            if (robot.IsPowered)
+            {
+                robot.Y++;
+            }
+            else
+            {
+                // Handle the case when the robot is not powered.
+                // Add your code here.
+            }
+        }
+    }
+
+    public class BachataCommand : RobotCommand
+    {
+        public void Run(Robot robot)
+        {
+            if (robot.IsPowered)
+            {
+                for (int repeatSteps = 0; repeatSteps < 3; repeatSteps++)
+                {
+                    robot.X++;
+                    robot.X++;
+                    robot.X--;
+                    robot.X--;
+                    robot.X--;
+                }
+                robot.Y++;
+                robot.X--;
+                robot.Y--;
+                robot.X++;
+            }
+            else
+            {
+                // Handle the case when the robot is not powered.
+                // Add your code here.
+            }
+        }
     }
 }

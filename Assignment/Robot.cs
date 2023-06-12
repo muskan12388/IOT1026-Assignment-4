@@ -1,47 +1,55 @@
-﻿using Assignment.InterfaceCommand;
+﻿// Change to 'using Assignment.InterfaceCommand' when you are ready to test your interface implementation
+// using Assignment.AbstractCommand;
+using Assignment.InterfaceCommand;
 
 namespace Assignment
 {
-    public enum Direction
-    {
-        North,
-        South,
-        East,
-        West
-    }
-
-
     public class Robot
     {
-        public bool IsPlaced { get; set; }
-        // Define public properties
-        public int NumCommands { get; } // Represents the number of commands the robot can store
-        public int X { get; set; } // Represents the X coordinate of the robot's position
-        public int Y { get; set; } // Represents the Y coordinate of the robot's position
-        public bool IsPowered { get; set; } // Indicates whether the robot is powered on or off
+        // These are properties, you can replace these with traditional getters/setters if you prefer.
+        public int NumCommands { get; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public bool IsPowered { get; set; }
 
-        // Define private fields
-        private const int DefaultCommands = 6; // Default number of commands the robot can store
-        private readonly IRobotCommand[] _commands; // Array to store the robot commands
-        private int _commandsLoaded = 0; // Counter to track the number of commands loaded into the robot
+        private const int DefaultCommands = 6;
 
-        // Override the ToString() method to provide a string representation of the robot's state
+        // An array is not the preferred data structure here.
+        // You will get bonus marks if you replace the array with the preferred data structure
+        // Hint: It is NOT a list either,
+        private readonly RobotCommand[] _commands;
+        private int _commandsLoaded = 0;
+
         public override string ToString()
         {
             return $"[{X} {Y} {IsPowered}]";
         }
 
-        // Default constructor that initializes the robot with the default number of commands
+        /// <summary>
+        /// Constructor named "Robot" with no parameters. It has an initializer that calls another constructor.
+        /// </summary>
+        /// <constructor>
+        /// <modifier>public</modifier>
+        /// <name>Robot</name>
+        /// <parameters></parameters>
+        /// <initializer>this(DefaultCommands)</initializer>
+        /// <body>{ }</body>
+        /// </constructor>
         public Robot() : this(DefaultCommands) { }
 
-        // Constructor that allows specifying the number of commands the robot can store
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Robot"/> class with a specified number of commands.
+        /// </summary>
+        /// <param name="numCommands">The number of commands for the robot.</param>
         public Robot(int numCommands)
         {
-            _commands = new IRobotCommand[numCommands];
+            _commands = new RobotCommand[numCommands];
             NumCommands = numCommands;
         }
 
-        // Method to run the loaded commands
+        /// <summary>
+        /// Executes the loaded commands for the robot and prints the robot's state after each command execution.
+        /// </summary>
         public void Run()
         {
             for (var i = 0; i < _commandsLoaded; ++i)
@@ -51,13 +59,30 @@ namespace Assignment
             }
         }
 
-        // Method to load a command into the robot
-        public bool LoadCommand(IRobotCommand command)
+        /// <summary>
+        /// Loads a command into the robot's command array.
+        /// </summary>
+        /// <param name="command">The command to be loaded.</param>
+        /// <returns>
+        /// <c>true</c> if the command was successfully loaded;
+        /// otherwise, <c>false</c> if the command list is already full.
+        /// </returns>
+        public bool LoadCommand(RobotCommand command)
         {
             if (_commandsLoaded >= NumCommands)
                 return false;
             _commands[_commandsLoaded++] = command;
             return true;
+        }
+
+        /// <summary>
+        /// Loads a command into the robot's command array. (This overload is not implemented and throws an exception)
+        /// </summary>
+        /// <param name="robotCommand">The command to be loaded.</param>
+        /// <exception cref="System.NotImplementedException">Thrown when this overload is called.</exception>
+        public void LoadCommand(AbstractCommand.RobotCommand robotCommand)
+        {
+            throw new NotImplementedException();
         }
     }
 }
